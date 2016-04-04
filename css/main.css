@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html,body {
+  width: 100%;
+  height: 100%;
+}
+#canvas {
+  display: block;
+  background: url(../img/bg.png);
+  background-repeat: repeat-x;
+  background-size: 288px 100%;
+  position: fixed;
+
+  animation: animatedBackground 5s linear infinite;
+}
+
+@keyframes animatedBackground {
+  from { background-position: 288px 0; }
+  to { background-position: 0 0; }
+}
+
+#counter {
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  font-family: 'Flap';
+  top: 30px;
+  left: 50%;
+  padding: 20px 30px;
+  border-radius: 5px 5px 5px 5px;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+@font-face {
+    font-family: 'Flap';
+    src: url('../fonts/flap.ttf');
+    font-weight: bold;
+}
