@@ -2,11 +2,12 @@
 var pipeImg = new Image();
 var flapImg = new Image();
 
-//init sounds;
+//init sounds
 var wingSnd   = new Audio('sounds/sfx_wing.ogg');
 var scoreSnd  = new Audio('sounds/sfx_point.ogg');
 var hitSnd    = new Audio('sounds/sfx_hit.ogg');
 
+//application variables (to play with)
 var pipeGap           = 150;
 var pipeInterval      = 2000; //miliseconds between new pipes
 var maxVelocity       = 20;
@@ -16,19 +17,21 @@ var velocityUpLevel   = 5;
 var scoredPoints      = 0;
 var speed             = 1;
 
-var canvas = document.getElementById('canvas');
-var pipes = [];
-var prev = null;
-var flap = null;
-var flutterKeyDown = false;
-var gameOver = false;
-var hasCollided = false;
-var addPipeTime = 0;
+//application variables (unchangeble)
+var canvas            = document.getElementById('canvas');
+var pipes             = [];
+var prevTimestamp     = null;
+var flap              = null;
+var flutterKeyDown    = false;
+var gameOver          = false;
+var hasCollided       = false;
+var addPipeTime       = 0;
 
 function Pipe(y) {
 	this.x = canvas.width + pipeImg.width / 2;
 	this.y = y;
 }
+
 Pipe.prototype.outOfBounds = function() {
 	return this.x + pipeImg.width < 0
 };
@@ -155,7 +158,7 @@ Flap.prototype.flutter = function () {
   wingSnd.play();
 };
 
-function init(){
+function startGame(){
   pipeImg.src = 'img/pipe.png';
   flapImg.src = 'img/flap.png';
 
@@ -171,10 +174,10 @@ function init(){
 }
 
 function tick(timestamp) {
-	if(!prev) {
-		prev = timestamp;
+	if(!prevTimestamp) {
+		prevTimestamp = timestamp;
 	};
-	var interval = timestamp - prev;
+	var interval = timestamp - prevTimestamp;
 	
 	update(interval);
 
@@ -183,7 +186,7 @@ function tick(timestamp) {
   ctx.clearRect(0,0,canvas.width, canvas.height);
   render(ctx);
 
-  prev = timestamp;
+  prevTimestamp = timestamp;
   if(!gameOver) {
     window.requestAnimationFrame(tick);
   }
@@ -249,5 +252,5 @@ function onKeyUp(event) {
     flutterKeyDown = false;
   }
 }
- 
-init();
+
+startGame();
