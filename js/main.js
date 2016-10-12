@@ -22,6 +22,8 @@ var prev = null;
 var flap = null;
 var flutterKeyDown = false;
 var gameOver = false;
+var hasCollided = false;
+var addPipeTime = 0;
 
 function Pipe(y) {
 	this.x = canvas.width + pipeImg.width / 2;
@@ -94,15 +96,24 @@ Flap.prototype.update = function(interval) {
 
     hitSnd.currentTime = 0;
     hitSnd.play();
-    gameOver = true;
+    hasCollided = true;
   }
+  if(hasCollided && this.y >= canvas.height) {
+    this.y = canvas.height - flapImg.height;
+    flap.velocity = 0;
+    gameOver = true;
 
+  }
   this.updateWing(interval);
 };
 
 Flap.prototype.hasCollision = function() {
   flapRect = {x: flap.x, y: flap.y, width: 160/3, height: 37};
   
+  if(isCollisionWithWindow(flapRect)) {
+    return true;
+  }
+
   for(var i = 0; i < pipes.length; i++) {
     topPipeRect = {x: pipes[i].currentX - pipeImg.width, y: pipes[i].currentYTopPipe - pipeImg.height, width: pipeImg.width, height: pipeImg.height};
     bottomPipeRect = {x: pipes[i].currentX, y: pipes[i].currentYBottomPipe, width: pipeImg.width, height: pipeImg.height};
@@ -173,10 +184,11 @@ function tick(timestamp) {
   render(ctx);
 
   prev = timestamp;
-  window.requestAnimationFrame(tick);
+  if(!gameOver) {
+    window.requestAnimationFrame(tick);
+  }
 }
 
-var addPipeTime = 0;
 function update(interval) {
 
 	addPipeTime -= interval;
@@ -206,6 +218,12 @@ function isCollision(rect1, rect2) {
     return true;
   }
   return false;
+}
+
+function isCollisionWithWindow(flapRect) {
+  if(flapRect.y < 0 || flapRect.y > canvas.height) {
+    return true;
+  }
 }
 
 function render(ctx) {
