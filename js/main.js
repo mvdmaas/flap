@@ -29,34 +29,26 @@ function Pipe(y) {
 	this.y = y;
 }
 
-Pipe.prototype.outOfBounds = function() {
-	return this.x + pipeImg.width < 0
-};
-
 Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
 };
 
 Pipe.prototype.render = function(ctx) {
-
 	this.currentX = Math.floor(this.x);
 	this.currentYTopPipe = canvas.height /2 + this.y - pipeGap / 2;
 	this.currentYBottomPipe = canvas.height /2 + this.y + pipeGap / 2;
 
-	ctx.save();
-
   //render top pipe
+	ctx.save();
 	ctx.translate(this.currentX, this.currentYTopPipe);
   ctx.drawImage(pipeImg,-pipeImg.width / 2, -pipeImg.height);
-
   ctx.restore();
-  ctx.save();
 
   //render bottom pipe
+  ctx.save();
   ctx.translate(this.currentX, this.currentYBottomPipe);
   ctx.rotate(Math.PI);
   ctx.drawImage(pipeImg,-pipeImg.width / 2, -pipeImg.height);
-
   ctx.restore();
 };
 
@@ -112,7 +104,7 @@ function tick(timestamp) {
 	if(!prevTimestamp) {
 		prevTimestamp = timestamp;
 	};
-	var interval = timestamp - prevTimestamp;
+	var interval = timestamp - prevTimestamp; //time in ms between previous and current animation frame
 	
 	update(interval);
 
@@ -125,23 +117,25 @@ function tick(timestamp) {
   window.requestAnimationFrame(tick);
 }
 
+function updatePipes(interval) {
+  addPipeTime -= interval;
+  if(addPipeTime <= 0) {
+    var y = Math.random() * (canvas.height / 2) - canvas.height / 4;
+    pipes.push(new Pipe(y));
+    addPipeTime += pipeInterval;
+  }
+
+  for(var i = 0; i < pipes.length; i++) {
+    pipes[i].update(interval);
+  }
+
+  while(!pipes && pipes[0].outOfBounds()) {
+    pipes.unshift();
+  }
+}
+
 function update(interval) {
-	addPipeTime -= interval;
-	while(addPipeTime <= 0) {
-		var y = Math.random() * (canvas.height / 2) - canvas.height / 4; 
-
-		pipes.push(new Pipe(y));
-
-		addPipeTime += pipeInterval;
-	}
-
-	for(var i = 0; i < pipes.length; i++) {
-		pipes[i].update(interval);
-	}
-
-	while(!pipes && pipes[0].outOfBounds()) {
-		pipes.unshift();	
-	}
+	updatePipes(interval);
   flap.update(interval);
 }
 
