@@ -22,8 +22,6 @@ var canvas            = document.getElementById('canvas');
 var pipes             = [];
 var prevTimestamp     = null;
 var flap              = null;
-var flutterKeyDown    = false;
-var gameOver          = false;
 var hasCollided       = false;
 var addPipeTime       = 0;
 
@@ -38,14 +36,6 @@ function Flap() {
 }
 
 Flap.prototype.update = function(interval) {
-  if(this.isPlaying) {
-    this.velocity -= interval / 1000 * gravitation;
-    if(this.velocity < -maxVelocity)  {
-      this.velocity = -maxVelocity;
-    }
-    this.y -= this.velocity;
-  }
-
   this.updateWing(interval);
 };
 
@@ -69,13 +59,6 @@ Flap.prototype.render = function(ctx) {
   ctx.rotate(-(Math.PI /2 * (this.velocity / maxVelocity)));
   ctx.drawImage(flapImg, this.wingIndex * 160/3, 0, 160/3, 37, -160/6, -37/2, 160/3, 37);
   ctx.restore();
-};
-
-Flap.prototype.flutter = function () {
-  this.velocity = velocityUpLevel;
-  this.isPlaying = true;
-  wingSnd.currentTime = 0;
-  wingSnd.play();
 };
 
 function startGame(){
@@ -102,9 +85,7 @@ function tick(timestamp) {
   render(ctx);
 
   prevTimestamp = timestamp;
-  if(!gameOver) {
-    window.requestAnimationFrame(tick);
-  }
+  window.requestAnimationFrame(tick);
 }
 
 function update(interval) {
