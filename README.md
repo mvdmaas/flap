@@ -7,6 +7,10 @@
 ## Exercises
 
 ### Exercise 1
+> As you start the game, you will see that Flappy already appears on the screen. The first exercise is to let Flappy flutter its wings.
+> To do that, you must extend the use of the picture 'flap.png'. 
+> Switch every x milliseconds (using the interval from the update-method) to another image of Flappy to simulate the fluttering.
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 1. Checkout branch 'exercise-1'
 2. Make the Flappy bird flutter
 3. *Solution is found on branch 'exercise-1-solution'*
