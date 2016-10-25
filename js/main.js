@@ -40,7 +40,23 @@ Flap.prototype.update = function(interval) {
 };
 
 Flap.prototype.updateWing = function(interval) {
-  /* Exercise 1 */
+  /* 
+    Exercise 1: find a mechanism to update the flap index 
+    and direction every time a new frame is rendered. 
+    You need to modify the wingIndex of Flappy in order to create the flutter effect.
+    The wingIndex is used in the render method to select a partial of the flappy image.
+  */
+  this.wingTime -= interval;
+  if(this.wingTime < 0) {
+
+    if(this.wingIndex ==2) {
+      this.wingDirection = -1;
+    } else if(this.wingIndex == 0) {
+      this.wingDirection = 1;
+    }
+    this.wingIndex += this.wingDirection;
+    this.wingTime = wingFrameTime;
+  }
 }
 
 Flap.prototype.render = function(ctx) {
