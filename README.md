@@ -29,7 +29,7 @@
 3. *Solution is found on branch 'exercise-2-solution'*
 
 ### Exercise 3
-> At this moment, Flappy is not sensitive to gravitation. Put some gravitation on the Flappy object, so that it will drop down slowly to the bottom.
+> At this moment, there is no gravitation on the planet of Flappy. Put some gravitation force on the Flappy object, so that it will drop down slowly to the bottom.
 > Next it is also necessary to interact with Flappy so that it will fly up when you hit the spacebar. 
 
 1. Checkout branch 'exercise-3'
@@ -38,7 +38,7 @@
 4. *Solution is found on branch 'exercise-3-solution'*
 
 ### Exercise 4
-> The game is now playable, but actually scoring point is what it's all about. Update the score everytime you pass another pipe. 
+> The game is now playable, but actually scoring points is what it's all about. Update the score everytime you pass another pipe. 
 
 1. Checkout branch 'exercise-4'
 2. Find a mechanism to keep track of the score
