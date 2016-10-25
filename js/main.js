@@ -22,7 +22,7 @@ var canvas            = document.getElementById('canvas');
 var pipes             = [];
 var prevTimestamp     = null;
 var flap              = null;
-var flutterKeyDown    = false;
+var jumpKeyDown       = false;
 var gameOver          = false;
 var hasCollided       = false;
 var addPipeTime       = 0;
@@ -39,7 +39,6 @@ Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
 
   if (this.x < flap.x && !this.isCounted) {
-    //update score
     this.updateScore();  
   }
 };
@@ -151,7 +150,7 @@ Flap.prototype.render = function(ctx) {
   ctx.restore();
 };
 
-Flap.prototype.flutter = function () {
+Flap.prototype.jump = function () {
   this.velocity = velocityUpLevel;
   this.isPlaying = true;
   wingSnd.currentTime = 0;
@@ -164,11 +163,11 @@ function startGame(){
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  flap = new Flap();
+
+  flap = new Flap(); //Only one flap instance per game
+
   window.addEventListener("keydown", onKeyDown, false);
-  canvas.addEventListener("touchstart", onKeyDown, false);
   window.addEventListener("keyup", onKeyUp, false);
-  canvas.addEventListener("touchend", onKeyUp, false);
 
   window.requestAnimationFrame(tick);
 }
@@ -193,13 +192,11 @@ function tick(timestamp) {
 }
 
 function update(interval) {
-
 	addPipeTime -= interval;
+
 	while(addPipeTime <= 0) {
 		var y = Math.random() * (canvas.height / 2) - canvas.height / 4; 
-
 		pipes.push(new Pipe(y));
-
 		addPipeTime += pipeInterval;
 	}
 
@@ -239,9 +236,9 @@ function render(ctx) {
 function onKeyDown(event) {;
   var keyCode = event.keyCode; 
   if(keyCode === 32 || !keyCode) {
-    if(!flutterKeyDown) {
-      flap.flutter();
-      flutterKeyDown = true;
+    if(!jumpKeyDown) {
+      flap.jump();
+      jumpKeyDown = true;
     }
   }
 }
@@ -249,7 +246,7 @@ function onKeyDown(event) {;
 function onKeyUp(event) {
   var keyCode = event.keyCode; 
   if(keyCode === 32 || !keyCode) {
-    flutterKeyDown = false;
+    jumpKeyDown = false;
   }
 }
 
