@@ -30,11 +30,11 @@ function Pipe(y) {
 }
 
 Pipe.prototype.update = function(interval) {
-  /* Determine how the pipes should be updated every time */
+  /* EXERCISE 2: Determine how the pipes should be updated every time */
 };
 
 Pipe.prototype.render = function(ctx) {
-  /*
+  /* EXERCISE 2: 
     find out how to render the pipes. 
     Keep in mind that in this set-up both pipes will be rendered with one Pipe object,
     the top pipe and the bottom pipe. 
@@ -107,7 +107,9 @@ function tick(timestamp) {
 }
 
 function updatePipes(interval) {
-  /* Build a mechanism that updates all pipes 
+
+  /* EXERCISE 2: 
+     Build a mechanism that updates all pipes 
      You will also need to figure out when to 
      add and remove pipes when they (dis)appear from the screen
   */
