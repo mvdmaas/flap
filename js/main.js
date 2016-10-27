@@ -2,11 +2,6 @@
 var pipeImg = new Image();
 var flapImg = new Image();
 
-//init sounds
-var wingSnd   = new Audio('sounds/sfx_wing.ogg');
-var scoreSnd  = new Audio('sounds/sfx_point.ogg');
-var hitSnd    = new Audio('sounds/sfx_hit.ogg');
-
 //application variables (to play with)
 var pipeGap           = 150;
 var pipeInterval      = 2000; //miliseconds between new pipes
@@ -41,8 +36,6 @@ Pipe.prototype.update = function(interval) {
 };
 
 Pipe.prototype.updateScore = function() {
-  scoreSnd.currentTime = 0;
-  scoreSnd.play();
   this.isCounted = true;
   scoredPoints++;
   document.getElementById("counter").innerHTML = scoredPoints;
@@ -117,8 +110,6 @@ Flap.prototype.render = function(ctx) {
 Flap.prototype.jump = function () {
   this.velocity = velocityUpLevel;
   this.isPlaying = true;
-  wingSnd.currentTime = 0;
-  wingSnd.play();
 };
 
 function startGame(){
