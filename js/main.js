@@ -34,6 +34,8 @@ function Pipe(y) {
 
 Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
+
+  /* EXERCISE 4: construct a method that counts the score */
 };
 
 Pipe.prototype.render = function(ctx) {
