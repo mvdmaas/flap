@@ -70,11 +70,7 @@ function Flap() {
 }
 
 Flap.prototype.update = function(interval) {
-  this.velocity -= interval / 1000 * gravitation;
-  if(this.velocity < -maxVelocity)  {
-    this.velocity = -maxVelocity;
-  }
-  this.y -= this.velocity;
+  /* EXERCISE 3: Put some gravitation on flappy */
 
   this.updateWing(interval);
 };
@@ -102,13 +98,6 @@ Flap.prototype.render = function(ctx) {
   ctx.restore();
 };
 
-Flap.prototype.jump = function () {
-  this.velocity = velocityUpLevel;
-  this.isPlaying = true;
-  wingSnd.currentTime = 0;
-  wingSnd.play();
-};
-
 function startGame(){
   pipeImg.src = 'img/pipe.png';
   flapImg.src = 'img/flap.png';
@@ -117,9 +106,7 @@ function startGame(){
   canvas.height = window.innerHeight;
 
   flap = new Flap(); //Only one flap instance per game
-
-  window.addEventListener("keydown", onKeyDown, false);
-  window.addEventListener("keyup", onKeyUp, false);
+  /* EXERCISE 3: define some event listeners for flappy */
 
   window.requestAnimationFrame(tick);
 }
@@ -167,23 +154,6 @@ function render(ctx) {
 		pipes[i].render(ctx);
 	}
   flap.render(ctx);
-}
-
-function onKeyDown(event) {;
-  var keyCode = event.keyCode; 
-  if(keyCode === 32 || !keyCode) {
-    if(!jumpKeyDown) {
-      flap.jump();
-      jumpKeyDown = true;
-    }
-  }
-}
-
-function onKeyUp(event) {
-  var keyCode = event.keyCode; 
-  if(keyCode === 32 || !keyCode) {
-    jumpKeyDown = false;
-  }
 }
 
 startGame();
