@@ -106,7 +106,6 @@ Flap.prototype.jump = function () {
   this.velocity = velocityUpLevel;
   this.isPlaying = true;
   wingSnd.currentTime = 0;
-  wingSnd.play();
 };
 
 function startGame(){
