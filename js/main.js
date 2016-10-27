@@ -35,7 +35,15 @@ function Pipe(y) {
 Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
 
-  /* EXERCISE 4: construct a method that counts the score */
+  if (this.x < flap.x && !this.isCounted) {
+    this.updateScore();
+  }
+};
+
+Pipe.prototype.updateScore = function() {
+  this.isCounted = true;
+  scoredPoints++;
+  document.getElementById("counter").innerHTML = scoredPoints;
 };
 
 Pipe.prototype.render = function(ctx) {
