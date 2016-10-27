@@ -32,23 +32,8 @@ function Pipe(y) {
 	this.y = y;
 }
 
-Pipe.prototype.outOfBounds = function() {
-	return this.x + pipeImg.width < 0
-};
 Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
-
-  if (this.x < flap.x && !this.isCounted) {
-    this.updateScore();  
-  }
-};
-
-Pipe.prototype.updateScore = function() {
-  scoreSnd.currentTime = 0;
-  scoreSnd.play();
-  this.isCounted = true;
-  scoredPoints++;
-  document.getElementById("counter").innerHTML = scoredPoints;
 };
 
 Pipe.prototype.render = function(ctx) {
@@ -85,46 +70,13 @@ function Flap() {
 }
 
 Flap.prototype.update = function(interval) {
-  if(this.isPlaying) {
-    this.velocity -= interval / 1000 * gravitation;
-    if(this.velocity < -maxVelocity)  {
-      this.velocity = -maxVelocity;
-    }
-    this.y -= this.velocity;
+  this.velocity -= interval / 1000 * gravitation;
+  if(this.velocity < -maxVelocity)  {
+    this.velocity = -maxVelocity;
   }
+  this.y -= this.velocity;
 
-  if(this.hasCollision()) {
-    flap.velocity = -1000;
-
-    hitSnd.currentTime = 0;
-    hitSnd.play();
-    hasCollided = true;
-  }
-  if(hasCollided && this.y >= canvas.height) {
-    this.y = canvas.height - flapImg.height;
-    flap.velocity = 0;
-    gameOver = true;
-
-  }
   this.updateWing(interval);
-};
-
-Flap.prototype.hasCollision = function() {
-  flapRect = {x: flap.x, y: flap.y, width: 160/3, height: 37};
-  
-  if(isCollisionWithWindow(flapRect)) {
-    return true;
-  }
-
-  for(var i = 0; i < pipes.length; i++) {
-    topPipeRect = {x: pipes[i].currentX - pipeImg.width, y: pipes[i].currentYTopPipe - pipeImg.height, width: pipeImg.width, height: pipeImg.height};
-    bottomPipeRect = {x: pipes[i].currentX, y: pipes[i].currentYBottomPipe, width: pipeImg.width, height: pipeImg.height};
-    
-    if(isCollision(flapRect, topPipeRect) || isCollision(flapRect, bottomPipeRect)) {
-      return true;
-    }
-  }
-  return false;
 };
 
 Flap.prototype.updateWing = function(interval) {
@@ -208,22 +160,6 @@ function update(interval) {
 		pipes.unshift();	
 	}
   flap.update(interval);
-}
-
-function isCollision(rect1, rect2) {
-  if (rect1.x < rect2.x + rect2.width &&
-   rect1.x + rect1.width > rect2.x &&
-   rect1.y < rect2.y + rect2.height &&
-   rect1.height + rect1.y > rect2.y) {
-    return true;
-  }
-  return false;
-}
-
-function isCollisionWithWindow(flapRect) {
-  if(flapRect.y < 0 || flapRect.y > canvas.height) {
-    return true;
-  }
 }
 
 function render(ctx) {
