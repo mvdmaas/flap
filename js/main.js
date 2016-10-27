@@ -41,6 +41,8 @@ Pipe.prototype.update = function(interval) {
 };
 
 Pipe.prototype.updateScore = function() {
+  scoreSnd.currentTime = 0;
+  scoreSnd.play();
   this.isCounted = true;
   scoredPoints++;
   document.getElementById("counter").innerHTML = scoredPoints;
@@ -116,6 +118,7 @@ Flap.prototype.jump = function () {
   this.velocity = velocityUpLevel;
   this.isPlaying = true;
   wingSnd.currentTime = 0;
+  wingSnd.play();
 };
 
 function startGame(){
