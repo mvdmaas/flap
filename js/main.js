@@ -30,26 +30,15 @@ function Pipe(y) {
 }
 
 Pipe.prototype.update = function(interval) {
-	this.x -= interval * (speed / 10);
+  /* Determine how the pipes should be updated every time */
 };
 
 Pipe.prototype.render = function(ctx) {
-	this.currentX = Math.floor(this.x);
-	this.currentYTopPipe = canvas.height /2 + this.y - pipeGap / 2;
-	this.currentYBottomPipe = canvas.height /2 + this.y + pipeGap / 2;
-
-  //render top pipe
-	ctx.save();
-	ctx.translate(this.currentX, this.currentYTopPipe);
-  ctx.drawImage(pipeImg,-pipeImg.width / 2, -pipeImg.height);
-  ctx.restore();
-
-  //render bottom pipe
-  ctx.save();
-  ctx.translate(this.currentX, this.currentYBottomPipe);
-  ctx.rotate(Math.PI);
-  ctx.drawImage(pipeImg,-pipeImg.width / 2, -pipeImg.height);
-  ctx.restore();
+  /*
+    find out how to render the pipes. 
+    Keep in mind that in this set-up both pipes will be rendered with one Pipe object,
+    the top pipe and the bottom pipe. 
+  */
 };
 
 function Flap() {
@@ -118,20 +107,10 @@ function tick(timestamp) {
 }
 
 function updatePipes(interval) {
-  addPipeTime -= interval;
-  if(addPipeTime <= 0) {
-    var y = Math.random() * (canvas.height / 2) - canvas.height / 4;
-    pipes.push(new Pipe(y));
-    addPipeTime += pipeInterval;
-  }
-
-  for(var i = 0; i < pipes.length; i++) {
-    pipes[i].update(interval);
-  }
-
-  while(!pipes && pipes[0].outOfBounds()) {
-    pipes.unshift();
-  }
+  /* Build a mechanism that updates all pipes 
+     You will also need to figure out when to 
+     add and remove pipes when they (dis)appear from the screen
+  */
 }
 
 function update(interval) {
