@@ -4,6 +4,9 @@
 - $ npm install
 - $ npm run dev
 
+## Presentation
+- https://drive.google.com/file/d/0B52b6Rtu8RYuSGFjR3ZmWVNMckU/view
+
 ## Exercises
 
 ### Exercise 1
