@@ -40,8 +40,12 @@ Flap.prototype.updateWing = function(interval) {
     and direction every time a new frame is rendered. 
     You need to modify the wingIndex of Flappy in order to create the flutter effect.
     The wingIndex is used in the render method to select a partial of the flappy image.
+    
+    The wingTime is the interval that Flappy will re-render a new image. 
+    This time will be subtracted each time the tick-method is called. When the wingtime is 
+    zero or below, the image will be updated and the constant 'wingFrameTime' 
+    will be set again for the next interval-update 
   */
-}
 
 Flap.prototype.render = function(ctx) {
   ctx.save();
