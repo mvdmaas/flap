@@ -27,6 +27,9 @@ function Pipe(y) {
 	this.y = y;
 }
 
+Pipe.prototype.outOfBounds = function() {
+  return this.x + pipeImg.width < 0
+};
 Pipe.prototype.update = function(interval) {
 	this.x -= interval * (speed / 10);
 
