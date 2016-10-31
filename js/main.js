@@ -46,7 +46,7 @@ Flap.prototype.updateWing = function(interval) {
     zero or below, the image will be updated and the constant 'wingFrameTime' 
     will be set again for the next interval-update 
   */
-
+}
 Flap.prototype.render = function(ctx) {
   ctx.save();
   ctx.translate(this.x + 160/6, this.y + 37 /2);
